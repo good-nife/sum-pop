@@ -1,160 +1,160 @@
-# 凑凑数 Sum Pop
+# Sum Pop (凑凑数)
 
-一个数字配对小游戏：在棋盘上点几个数，让它们加起来正好等于目标数，凑出一组就消掉。限时内凑够组数就过关，凑得越多星星越多。
+A number-matching puzzle game. Tap numbers on the board that add up to the target; each correct group pops off the board. Make enough groups before time runs out to pass the level, and make more to earn more stars.
 
-*A number-matching puzzle: tap numbers that add up to the target before time runs out. Bilingual (中文 / English), built as a web page and packaged as an iOS app with [Capacitor](https://capacitorjs.com/).*
+The game is a plain web page (no framework, no build step), packaged as an iOS app with [Capacitor](https://capacitorjs.com/). The interface is in English and Chinese, and follows the device language.
 
 <p>
-  <img src="docs/home.png" width="260" alt="首页：按等级排列的关卡列表">
+  <img src="docs/home.png" width="260" alt="Home screen: levels grouped by world, with stars earned">
   &nbsp;
-  <img src="docs/game.png" width="260" alt="游戏画面：目标 40，已经点了 30">
+  <img src="docs/game.png" width="260" alt="Game screen: target is 40, the player has tapped 15">
 </p>
 
-关卡从"凑 1"开始，一直到凑 100，后面还有负数和小数：
+Levels start with "Make 1" and go all the way up to 100, then add negative numbers and decimals:
 
-| 等级 | 内容 |
+| Level | What it's about |
 |---|---|
-| 1 小小加法 | 凑 1 到 10，有 0，限时 45 秒，发呆会自动提示（给小朋友） |
-| 2 凑十几 | 凑 11 到 20 |
-| 3 凑整十 | 凑 10、20 …… 100 |
-| 4 负数登场 | 带斜纹的是负数，一次最多点 3 个 |
-| 5 小数点 | 目标是小数 |
+| 1 First Sums | Make 1 to 10, with 0 on the board. 45-second timer, auto-hints when idle (made for young kids) |
+| 2 Teens | Make 11 to 20 |
+| 3 Make Tens | Make 10, 20 … 100 |
+| 4 Negatives | Striped tiles are negative; tap up to 3 numbers |
+| 5 Decimals | The target is a decimal |
 
 ---
 
-## 只想玩一下：用浏览器（不需要 Mac）
+## Just want to play? Use a browser (no Mac needed)
 
-游戏本身就是网页，不用安装任何东西。
+The game is a web page, so there's nothing to install.
 
-**在电脑上玩：** 下载代码后，直接用浏览器打开 `www/index.html`。
+**On a computer:** download the code and open `www/index.html` in your browser.
 
 ```sh
 git clone https://github.com/sslcandoit/sum-pop.git
-open sum-pop/www/index.html        # Windows 上双击这个文件即可
+open sum-pop/www/index.html        # on Windows, just double-click the file
 ```
 
-**在手机浏览器里玩：** 在电脑上开一个本地网页服务，手机和电脑连同一个 Wi-Fi 就能打开。
+**On a phone browser:** start a local web server on your computer, then open it from a phone on the same Wi-Fi network.
 
 ```sh
 cd sum-pop
 python3 -m http.server 8000 -d www
 ```
 
-然后在手机浏览器里打开 `http://<电脑的局域网 IP>:8000`。Mac 可以用 `ipconfig getifaddr en0` 查 IP。在 Safari 里点"分享 → 添加到主屏幕"，用起来就和 App 差不多。
+Then open `http://<your computer's local IP>:8000` on the phone. On a Mac, `ipconfig getifaddr en0` prints the IP. In Safari, **Share → Add to Home Screen** makes it feel almost like an app.
 
-浏览器版和 App 版的玩法完全一样，区别只是 App 有 iPhone 的震动反馈。进度保存在当前浏览器里。
+The browser version plays exactly like the app; the app just adds haptic feedback on iPhone. Progress is saved in that browser.
 
 ---
 
-## 装到自己的 iPhone 上
+## Install it on your own iPhone
 
-### 需要准备
+### What you need
 
-- 一台 Mac，装好 **Xcode 26** 或更新版本（在 App Store 免费下载）
-- **Node.js 22** 或更新版本（[nodejs.org](https://nodejs.org/) 或 `brew install node`）
-- 一个 Apple ID。免费的就行，不需要付费开发者账号
-- iPhone 系统 **iOS 15** 或更新版本，以及一根数据线（第一次需要用线连接）
+- A Mac with **Xcode 26** or later (free on the Mac App Store)
+- **Node.js 22** or later ([nodejs.org](https://nodejs.org/) or `brew install node`)
+- An Apple ID. A free one works; you don't need a paid developer account
+- An iPhone on **iOS 15** or later, and a USB cable for the first install
 
-### 步骤
+### Steps
 
-**1. 下载代码，安装依赖，打开 Xcode**
+**1. Get the code, install dependencies, open Xcode**
 
 ```sh
 git clone https://github.com/sslcandoit/sum-pop.git
 cd sum-pop
 npm install
-npm run ios          # 把 www/ 同步到 iOS 工程，然后打开 Xcode
+npm run ios          # copies www/ into the iOS project, then opens Xcode
 ```
 
-**2. 在 Xcode 里改成你自己的签名**
+**2. Switch the signing to your own account**
 
-这个工程里的签名设置是作者的，你的电脑用不了，需要改两处：
+The project is set up with the author's signing settings, which won't work on your Mac. Change two things:
 
-1. 如果还没登录过 Apple ID：打开 Xcode 菜单 **Settings → Accounts**，点左下角 **+** 添加你的 Apple ID。
-2. 左侧点最上面的 **App** 项目，中间选 **TARGETS → App**，切到 **Signing & Capabilities** 标签页：
-   - **Team**：选你自己的名字，后面带 "(Personal Team)" 的那个就是免费账号。
-   - **Bundle Identifier**：把 `com.sslee.sumpop` 改成你自己的，比如 `com.你的名字.sumpop`。这个标识已经被作者的账号占用了，不改的话会签名失败。
+1. If you haven't added your Apple ID to Xcode yet: open **Xcode → Settings → Accounts**, click **+** in the bottom-left corner and sign in.
+2. In the left sidebar, click the top **App** project. In the middle pane, select **TARGETS → App**, then open the **Signing & Capabilities** tab:
+   - **Team**: pick your own name. A free account shows up as "(Personal Team)".
+   - **Bundle Identifier**: change `com.sslee.sumpop` to something of your own, such as `com.yourname.sumpop`. The original ID is already registered to the author's account, so signing fails if you keep it.
 
-**3. 打开 iPhone 的开发者模式**
+**3. Turn on Developer Mode on the iPhone**
 
-1. 用数据线把 iPhone 连到 Mac，手机上弹出"要信任此电脑吗"时选 **信任**。
-2. 在 iPhone 上打开 **设置 → 隐私与安全性 → 开发者模式**，打开它，手机会重启。重启后再确认一次。
-   如果找不到这个选项，先完成下一步点一次运行，选项就会出现。
+1. Connect the iPhone to the Mac with the cable. When the phone asks **Trust This Computer?**, tap **Trust**.
+2. On the iPhone, go to **Settings → Privacy & Security → Developer Mode** and turn it on. The phone restarts; confirm once more after it boots.
+   If the option isn't there yet, do the next step once (press Run) and it will appear.
 
-**4. 运行**
+**4. Run**
 
-在 Xcode 窗口顶部选择你的 iPhone 作为运行目标，点 **▶ 运行**（或按 ⌘R）。编译完成后，App 会自动安装到手机上并打开。
+At the top of the Xcode window, choose your iPhone as the run destination and press **▶ Run** (⌘R). Xcode builds the app, installs it on the phone and opens it.
 
-第一次打开时如果提示"**不受信任的开发者**"：在 iPhone 上打开 **设置 → 通用 → VPN 与设备管理**，点你的 Apple ID，再点 **信任**。然后回到主屏幕重新打开 App。
+If the first launch says **Untrusted Developer**: on the iPhone, go to **Settings → General → VPN & Device Management**, tap your Apple ID, then tap **Trust**. Go back to the home screen and open the app again.
 
-> **免费 Apple ID 的限制：** 用免费账号安装的 App **7 天后会失效**，打不开了。到时把手机连上 Mac，在 Xcode 里再点一次运行就行，游戏进度不会丢。付费开发者账号安装的 App 有效期是一年。
+> **Limit of a free Apple ID:** apps installed with a free account **stop opening after 7 days**. When that happens, connect the phone and press Run in Xcode again; game progress is kept. With a paid developer account, the install lasts one year.
 
-**不想每次都打开 Xcode？** 签名设置好以后，也可以在命令行里安装：
+**Rather not open Xcode every time?** Once signing is set up, you can install from the command line:
 
 ```sh
-npx cap run ios --list               # 列出可用的设备
-npx cap run ios --target <设备 ID>
+npx cap run ios --list               # list available devices
+npx cap run ios --target <device id>
 ```
 
 ---
 
-## 修改游戏
+## Changing the game
 
-| 文件 | 内容 |
+| File | What's in it |
 |---|---|
-| [`www/levels.js`](www/levels.js) | **所有关卡的配置**。调难度、加关卡只需要改这个文件，每个字段的含义写在文件开头 |
-| [`www/i18n.js`](www/i18n.js) | 中英文界面文字 |
-| [`www/game.js`](www/game.js) | 玩法、渲染、首页、存档 |
-| [`www/style.css`](www/style.css) | 样式 |
-| [`www/index.html`](www/index.html) | 页面结构 |
-| [`design/make_icons.py`](design/make_icons.py) | 生成 App 图标和启动画面（需要 `pip install pillow`） |
-| `ios/` | Xcode 工程，一般不用手动改 |
+| [`www/levels.js`](www/levels.js) | **Every level's settings.** Tuning difficulty or adding levels only touches this file. Each field is explained at the top of the file |
+| [`www/i18n.js`](www/i18n.js) | Interface text in English and Chinese |
+| [`www/game.js`](www/game.js) | Gameplay, rendering, home screen, saved progress |
+| [`www/style.css`](www/style.css) | Styles |
+| [`www/index.html`](www/index.html) | Page structure |
+| [`design/make_icons.py`](design/make_icons.py) | Generates the app icon and launch screen (needs `pip install pillow`) |
+| `ios/` | The Xcode project; normally you don't edit it by hand |
 
-**改关卡的注意事项：**
+**When editing levels:**
 
-- 每关的 `key`（比如 `'tens-40'`）是存档用的名字，**发布后不要再改**，改了玩家这一关的星星和最高纪录就丢了。插入、删除、调换关卡的顺序都没关系，界面上的编号会自动重排。
-- 改完后在浏览器里打开 `www/index.html?check`，页面上会列出配置里的错误，比如 key 重复、字段名拼错、数字池凑不出目标。
+- Each level's `key` (for example `'tens-40'`) is what saved progress is stored under. **Don't rename a key after release**, or players lose their stars and best score for that level. Inserting, removing or reordering levels is fine; the level numbers shown in the game update automatically.
+- After editing, open `www/index.html?check` in a browser. It lists any problems in the level settings, such as duplicate keys, misspelled field names, or a number pool that can't make the target.
 
-**调试用的网址参数：**
+**URL parameters for testing:**
 
-- `index.html?level=2-3`：直接进入第 2 级第 3 关，也可以用 key，比如 `?level=tens-40`
-- `index.html?level=2-3&result=25`：直接看"凑出 25 组"时的结算画面
+- `index.html?level=2-3` jumps straight into level 2, stage 3. A key works too, e.g. `?level=tens-40`
+- `index.html?level=2-3&result=25` shows the results screen as if you'd made 25 groups
 
-**改完后更新手机上的 App：** 修改 `www/` 里的文件后，手机上的 App 不会自动更新。先运行
+**Updating the app on your phone after a change:** editing files in `www/` doesn't update the installed app. First run
 
 ```sh
 npm run sync
 ```
 
-把改动复制进 iOS 工程，然后在 Xcode 里重新点一次 **▶ 运行**。只运行 `sync` 是不够的，手机上还是旧版本。
+to copy your changes into the iOS project, then press **▶ Run** in Xcode again. Running `sync` alone isn't enough; the phone keeps the old version until you run it again from Xcode.
 
 ---
 
-## 发布到 App Store / TestFlight（维护者）
+## Releasing to the App Store / TestFlight (maintainers)
 
-### 前提
+### Prerequisites
 
-- 加入 [Apple Developer Program](https://developer.apple.com/programs/)（每年 99 美元）。免费账号不能发布。
-- 在 [App Store Connect](https://appstoreconnect.apple.com/) 里新建 App，Bundle ID 选 `com.sslee.sumpop`。
+- Membership in the [Apple Developer Program](https://developer.apple.com/programs/) (US$99/year). Free accounts can't publish.
+- An app record in [App Store Connect](https://appstoreconnect.apple.com/) with the Bundle ID `com.sslee.sumpop`.
 
-### 发布前检查
+### Before each release
 
-- [ ] 首页的"**解锁全部关卡（测试用）**"按钮现在对所有玩家都可见，正式发布前要隐藏或删掉（在 `www/index.html` 的 `#unlockBtn`）
-- [ ] 打开 `www/index.html?check`，确认关卡配置没有报错
-- [ ] 每关的 `key` 和上一个版本相比没有被改名
+- [ ] The **"Unlock all levels (testing)"** button on the home screen is currently visible to every player. Hide or remove it before a public release (`#unlockBtn` in `www/index.html`)
+- [ ] Open `www/index.html?check` and make sure the level settings report no problems
+- [ ] No level `key` has been renamed since the previous release
 
-### 每次发版的步骤
+### Release steps
 
-1. **改版本号。** 在 Xcode 里 **TARGETS → App → General**：
-   - **Version**：给玩家看的版本号，比如 `1.0` → `1.1`
-   - **Build**：每次上传都必须比上一次大，比如 `1` → `2`
-2. **同步网页代码：** `npm run sync`
-3. **打包：** Xcode 顶部的运行目标选 **Any iOS Device (arm64)**，然后点菜单 **Product → Archive**。
-4. **上传：** 打包完成后会弹出 Organizer 窗口，选中刚才的包，点 **Distribute App → App Store Connect → Upload**。
-5. **测试：** 上传后等几分钟到几十分钟，新版本会出现在 App Store Connect 的 **TestFlight** 里。把测试的人加进去，他们装 TestFlight App 就能玩，不需要 Mac。
-6. **提交审核：** 在 App Store Connect 里填写截图、描述，选择这个 Build，点"提交以供审核"。
-   隐私问卷可以选"**不收集数据**"：游戏不联网，进度只保存在手机本地。
-7. **在 git 里记一个版本标签：**
+1. **Bump the version.** In Xcode, go to **TARGETS → App → General**:
+   - **Version**: the version players see, e.g. `1.0` → `1.1`
+   - **Build**: must be higher than any build uploaded before, e.g. `1` → `2`
+2. **Sync the web code:** `npm run sync`
+3. **Archive:** set the run destination at the top of Xcode to **Any iOS Device (arm64)**, then choose **Product → Archive**.
+4. **Upload:** when archiving finishes, the Organizer window opens. Select the new archive and click **Distribute App → App Store Connect → Upload**.
+5. **Test:** after a few minutes (sometimes longer), the build appears under **TestFlight** in App Store Connect. Add testers; they install the TestFlight app on their iPhone and can play without a Mac.
+6. **Submit for review:** in App Store Connect, add screenshots and a description, select the build, and click **Add for Review**.
+   For the privacy questionnaire you can answer **Data Not Collected**: the game makes no network requests and keeps progress only on the device.
+7. **Tag the release in git:**
 
    ```sh
    git tag v1.1
