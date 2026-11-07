@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+ios/App/App/public/
+ios/App/Pods/
+ios/App/output/
+ios/DerivedData/

@@ -1,0 +1,11 @@
+{
+  "appId": "com.sslee.sumpop",
+  "appName": "Sum Pop",
+  "webDir": "www",
+  "backgroundColor": "#E4EFEA",
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": false,
+    "backgroundColor": "#E4EFEA"
+  }
+}

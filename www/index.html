@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>Sum Pop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+  <!-- 首页 / 关卡地图 -->
+  <section id="home" class="screen home">
+    <header class="home-top">
+      <div>
+        <h1 class="wordmark" data-i18n="appName">Sum Pop</h1>
+        <p class="tagline" data-i18n="tagline"></p>
+      </div>
+      <span class="total num" id="totalStars"></span>
+    </header>
+    <div id="worlds" class="worlds"></div>
+    <div class="home-foot">
+      <button class="chip" id="langBtn" lang=""></button>
+      <button class="chip" id="soundBtn" aria-pressed="true"></button>
+      <button class="chip" id="unlockBtn" aria-pressed="false" data-i18n="unlockAll"></button>
+      <button class="chip" id="resetBtn" data-i18n="resetProgress"></button>
+    </div>
+    <div class="play-bar"><button class="cta" id="continueBtn"></button></div>
+  </section>
+
+  <!-- 游戏 -->
+  <section id="game" class="screen" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="backBtn" data-i18n-aria="backToLevels">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="lvl-title"><span id="lvlId"></span><span class="soft" id="lvlName"></span></div>
+      <span class="best-live num" id="bestLive"></span>
+      <div class="timer" id="timer" hidden></div>
+    </header>
+    <div class="target-card">
+      <div class="eqbar num" id="eqbar" aria-hidden="true"></div>
+      <div class="eq" id="eqLine" aria-live="polite"></div>
+      <div class="start-hint" id="startHint"></div>
+    </div>
+    <div class="goal"><span data-i18n="cleared"></span><div class="goal-bar" id="goalBar"><i id="goalFill"></i></div><span class="num" id="goalText"></span><span class="combo" id="combo" hidden></span></div>
+    <div class="board-wrap" id="boardWrap"><div class="board" id="board"></div></div>
+    <footer class="actions">
+      <button class="act" id="hintBtn"><span data-i18n="hint"></span> <b id="hintCount">3</b></button>
+      <button class="act" id="clearBtn" data-i18n="clear"></button>
+      <button class="act" id="restartBtn" data-i18n="restart"></button>
+    </footer>
+  </section>
+</div>
+
+<canvas id="fx" hidden aria-hidden="true"></canvas>
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h2 id="mTitle"></h2>
+    <div class="stars m-stars" id="mStars"></div>
+    <div class="m-score" id="mScore"><span class="m-count num" id="mCount"></span><span class="m-label" id="mLabel"></span><span class="m-best" id="mBest"></span></div>
+    <p id="mText"></p>
+    <div class="m-actions" id="mActions"></div>
+  </div>
+</div>
+
+<!-- 按顺序加载：关卡配置 → 界面文字 → 游戏本体（后面的文件会用到前面定义的 DEFAULTS / WORLDS / I18N） -->
+<script src="levels.js"></script>
+<script src="i18n.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
